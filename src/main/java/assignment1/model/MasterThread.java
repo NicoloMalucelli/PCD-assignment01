@@ -1,12 +1,14 @@
-package model;
+package assignment1.model;
 
-import controller.Controller;
-import utils.SetUpInfo;
+import assignment1.controller.Controller;
+import assignment1.utils.Log;
+import assignment1.utils.SetUpInfo;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class MasterThread extends Thread{
@@ -23,6 +25,17 @@ public class MasterThread extends Thread{
     @Override
     public void run() {
         this.searchFiles();
+        IntStream.range(0, nWorkers).forEach(i -> new WorkerThread(this.controller.getFiles(), this.controller.getResults()).start());
+        while(true){
+            try {
+                final Result result = this.controller.getResults().blockingRemove();
+                this.controller.getSortedResults().add(result);
+                Log.log(this.controller.getSortedResults().getFirstN(10).toString());
+                Log.log("\n\n");
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     private void searchFiles(){

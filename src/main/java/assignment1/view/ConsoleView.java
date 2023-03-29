@@ -1,6 +1,6 @@
-package view;
+package assignment1.view;
 
-import controller.Controller;
+import assignment1.controller.Controller;
 
 public class ConsoleView implements View{
     private Controller controller;
