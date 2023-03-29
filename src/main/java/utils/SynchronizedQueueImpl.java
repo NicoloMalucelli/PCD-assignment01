@@ -5,12 +5,13 @@ import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class SynchronizedQueueImpl<T> implements SynchronizedQueue<T>{
 
     private final List<T> list = new LinkedList<>();
-    private Lock mutex;
-    private Condition notEmpty;
+    private Lock mutex = new ReentrantLock();
+    private Condition notEmpty = mutex.newCondition();
 
     @Override
     public void add(T elem) {
