@@ -1,19 +1,14 @@
 package assignment1.model;
 
 import assignment1.utils.SetUpInfo;
-import assignment1.utils.SortedResultList;
-import assignment1.utils.SynchronizedQueue;
+import assignment1.utils.Results;
 
 public interface Model {
     SetUpInfo getSetUpInfo();
 
-    SynchronizedQueue<String> getFiles();
-
-    SynchronizedQueue<Result> getResults();
-
-    SortedResultList getSortedResults();
+    Results getResults();
 
     void addObserver(ModelObserver observer);
 
-    void notifyObservers();
+    void notifyObservers(ModelObserver.Event event);
 }

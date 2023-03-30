@@ -6,4 +6,8 @@ public record Interval(int min, int max) {
         return value >= min && value < max;
     }
 
+    @Override
+    public String toString() {
+        return "[" + min + ", " + max + '[';
+    }
 }

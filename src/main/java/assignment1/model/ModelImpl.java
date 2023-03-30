@@ -6,15 +6,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ModelImpl implements Model{
-    private final SynchronizedQueue<String> files = new SynchronizedQueueImpl<>();
-    private final SynchronizedQueue<Result> results = new SynchronizedQueueImpl<>();
-    private final SortedResultList sortedResults;
+    private final Results results;
     private final List<ModelObserver> observers = new LinkedList<>();
     private final SetUpInfo setUpInfo;
 
     public ModelImpl(SetUpInfo setUpInfo) {
         this.setUpInfo = setUpInfo;
-        this.sortedResults = new SortedResultListImpl(setUpInfo.nFiles(), setUpInfo.nIntervals(), setUpInfo.lastInterval());
+        this.results = new ResultsImpl(setUpInfo.nFiles(), setUpInfo.nIntervals(), setUpInfo.lastInterval());
     }
 
     @Override
@@ -22,25 +20,20 @@ public class ModelImpl implements Model{
         return setUpInfo;
     }
     @Override
-    public SynchronizedQueue<String> getFiles() {
-        return files;
-    }
-    @Override
-    public SynchronizedQueue<Result> getResults() {
+    public Results getResults() {
         return results;
-    }
-    @Override
-    public SortedResultList getSortedResults() {
-        return sortedResults;
     }
     @Override
     public void addObserver(ModelObserver observer){
         this.observers.add(observer);
     }
     @Override
-    public void notifyObservers(){
+    public void notifyObservers(ModelObserver.Event event){
         for(ModelObserver observer: observers){
-            observer.resultsUpdated();
+            switch (event){
+                case RESULTS_UPDATED -> observer.resultsUpdated();
+                case COMPUTATION_ENDED -> observer.computationEnded();
+            }
         }
     }
 

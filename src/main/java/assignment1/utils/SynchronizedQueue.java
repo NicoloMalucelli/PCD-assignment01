@@ -7,4 +7,5 @@ public interface SynchronizedQueue<T> {
     T blockingRemove() throws InterruptedException;
     Optional<T> remove();
     boolean isEmpty();
+    int size();
 }

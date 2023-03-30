@@ -7,14 +7,14 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
 
-public class SortedResultListImpl implements SortedResultList{
+public class ResultsImpl implements Results {
 
     private final Set<Result> results = new TreeSet<>();
     private final Map<Interval, Integer> distribution = new HashMap<>();
     private final int nResults;
     private Lock mutex = new ReentrantLock();
 
-    public SortedResultListImpl(int nResults, int nIntervals, int lastInterval) {
+    public ResultsImpl(int nResults, int nIntervals, int lastInterval) {
         this.nResults = nResults;
         if(nIntervals == 1){
             distribution.put(new Interval(0, Integer.MAX_VALUE), 0);
@@ -29,7 +29,7 @@ public class SortedResultListImpl implements SortedResultList{
     }
 
     @Override
-    public List<Result> getResults() {
+    public List<Result> getRanking() {
         try{
             mutex.lock();
             return results.stream().limit(nResults).collect(Collectors.toList());
@@ -57,6 +57,5 @@ public class SortedResultListImpl implements SortedResultList{
             mutex.unlock();
         }
     }
-
 
 }
