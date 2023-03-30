@@ -7,8 +7,10 @@ import assignment1.utils.SynchronizedQueue;
 import assignment1.utils.SetUpInfo;
 
 public interface Controller {
-    void start(SetUpInfo setUpInfo, int nWorkers);
+    void start(int nWorkers);
     SynchronizedQueue<Result> getResults();
     SynchronizedQueue<String> getFiles();
     SortedResultList getSortedResults();
+    void notifyObservers();
+    SetUpInfo getSetUpInfo();
 }

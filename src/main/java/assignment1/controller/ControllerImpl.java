@@ -2,11 +2,10 @@ package assignment1.controller;
 
 import assignment1.model.Model;
 import assignment1.model.Result;
+import assignment1.utils.SetUpInfo;
 import assignment1.utils.SortedResultList;
-import assignment1.utils.SortedResultListImpl;
 import assignment1.utils.SynchronizedQueue;
 import assignment1.model.MasterThread;
-import assignment1.utils.SetUpInfo;
 import assignment1.view.View;
 
 public class ControllerImpl implements Controller{
@@ -20,8 +19,8 @@ public class ControllerImpl implements Controller{
     }
 
     @Override
-    public void start(SetUpInfo setUpInfo, int nWorkers) {
-        new MasterThread(this, setUpInfo, nWorkers).start();
+    public void start(int nWorkers) {
+        new MasterThread(this , nWorkers).start();
     }
 
     @Override
@@ -37,5 +36,14 @@ public class ControllerImpl implements Controller{
     @Override
     public SortedResultList getSortedResults() {
         return model.getSortedResults();
+    }
+
+    @Override
+    public void notifyObservers(){
+        model.notifyObservers();
+    }
+    @Override
+    public SetUpInfo getSetUpInfo(){
+        return model.getSetUpInfo();
     }
 }

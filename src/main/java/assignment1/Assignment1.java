@@ -11,12 +11,13 @@ import assignment1.view.View;
 public class Assignment1 {
 
     public static void main(String[] args){
-        final Model model = new ModelImpl();
+        final SetUpInfo setUpInfo = new SetUpInfo("C:\\Users\\nicol\\Documents\\Progetti\\scarabeo", 50, 2, 100);
+        final Model model = new ModelImpl(setUpInfo);
         final View view = new ConsoleView();
         final Controller controller = new ControllerImpl(model, view);
 
-        final SetUpInfo setUpInfo = new SetUpInfo("C:\\Users\\nicol\\Documents\\Progetti\\scarabeo", 50, 1, 100);
-        controller.start(setUpInfo, 2);
+        model.addObserver(view);
+        controller.start(2);
     }
 
 }
