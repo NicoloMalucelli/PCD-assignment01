@@ -12,7 +12,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class MasterThread extends Thread{
-
+    public static final int NUM_OF_WORKERS = 7;
     private final Controller controller;
     private final int nWorkers;
     private final SynchronizedQueue<String> files = new SynchronizedQueueImpl<>();

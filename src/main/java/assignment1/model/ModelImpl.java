@@ -6,11 +6,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ModelImpl implements Model{
-    private final Results results;
+    private Results results;
     private final List<ModelObserver> observers = new LinkedList<>();
-    private final SetUpInfo setUpInfo;
+    private SetUpInfo setUpInfo;
 
-    public ModelImpl(SetUpInfo setUpInfo) {
+    @Override
+    public void init(SetUpInfo setUpInfo){
         this.setUpInfo = setUpInfo;
         this.results = new ResultsImpl(setUpInfo.nFiles(), setUpInfo.nIntervals(), setUpInfo.lastInterval());
     }

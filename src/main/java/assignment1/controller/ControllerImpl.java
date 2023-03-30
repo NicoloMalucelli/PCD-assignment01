@@ -18,7 +18,8 @@ public class ControllerImpl implements Controller{
     }
 
     @Override
-    public void start(int nWorkers) {
+    public void start(int nWorkers, SetUpInfo setUpInfo) {
+        this.model.init(setUpInfo);
         new MasterThread(this , nWorkers).start();
     }
 

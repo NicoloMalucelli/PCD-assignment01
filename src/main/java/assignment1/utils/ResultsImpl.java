@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class ResultsImpl implements Results {
 
     private final Set<Result> results = new TreeSet<>();
-    private final Map<Interval, Integer> distribution = new HashMap<>();
+    private final Map<Interval, Integer> distribution = new TreeMap<>();
     private final int nResults;
     private Lock mutex = new ReentrantLock();
 

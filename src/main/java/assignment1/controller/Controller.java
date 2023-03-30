@@ -5,7 +5,7 @@ import assignment1.utils.Results;
 import assignment1.utils.SetUpInfo;
 
 public interface Controller {
-    void start(int nWorkers);
+    void start(int nWorkers, SetUpInfo setUpInfo);
     Results getResults();
     void notifyObservers(ModelObserver.Event event);
     SetUpInfo getSetUpInfo();

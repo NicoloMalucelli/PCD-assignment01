@@ -14,10 +14,6 @@ public class ConsoleView implements View{
     }
     @Override
     public void resultsUpdated() {
-        /*
-        System.out.println("first X: " + this.controller.getSortedResults().getResults());
-        System.out.println("intervals: " + this.controller.getSortedResults().getDistribution());
-         */
     }
 
     @Override
