@@ -1,5 +1,6 @@
 package assignment1.model;
 
+import assignment1.utils.Flag;
 import assignment1.utils.Log;
 import assignment1.utils.SynchronizedQueue;
 
@@ -13,22 +14,22 @@ public class WorkerThread extends Thread {
 
     private final SynchronizedQueue<String> files;
     private final SynchronizedQueue<Result> results;
+    private final Flag stopExecutionFlag;
 
-    public WorkerThread(SynchronizedQueue<String> files, SynchronizedQueue<Result> results) {
+    public WorkerThread(SynchronizedQueue<String> files, SynchronizedQueue<Result> results, Flag stopExecutionFlag) {
         this.files = files;
         this.results = results;
+        this.stopExecutionFlag = stopExecutionFlag;
     }
 
     @Override
     public void run() {
-        while (true) {
+        while (!stopExecutionFlag.get()) {
             final Optional<String> path = files.remove();
             if (path.isEmpty()) {
                 break;
             }
-            //Log.log("Thread counting lines of " + path.get());
             final Result result = new Result(path.get(), countLines(path.get()));
-            //Log.log("Thread" + path.get() + " has " + result.lines() + " lines");
             results.add(result);
         }
     }

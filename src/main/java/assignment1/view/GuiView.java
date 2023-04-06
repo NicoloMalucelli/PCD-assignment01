@@ -3,6 +3,7 @@ package assignment1.view;
 import assignment1.controller.Controller;
 import assignment1.model.Result;
 import assignment1.utils.Interval;
+import assignment1.utils.Log;
 import assignment1.utils.SetUpInfo;
 import assignment1.utils.Strings;
 
@@ -82,15 +83,25 @@ public class GuiView implements View{
             }
             btnStart.setEnabled(false);
             btnStop.setEnabled(true);
-            this.controller.start(NUM_OF_WORKERS, new SetUpInfo(
-                    txtDirectory.getText(),
-                    Integer.parseInt(txtNumOfFiles.getText()),
-                    Integer.parseInt(txtNumOfIntervals.getText()),
-                    Integer.parseInt(txtLastInterval.getText())));
+
+            ranking.setModel(new DefaultListModel<>());
+            distribution.setModel(new DefaultListModel<>());
+
+            this.controller.processEvent(() -> {
+                this.controller.start(NUM_OF_WORKERS, new SetUpInfo(
+                        txtDirectory.getText(),
+                        Integer.parseInt(txtNumOfFiles.getText()),
+                        Integer.parseInt(txtNumOfIntervals.getText()),
+                        Integer.parseInt(txtLastInterval.getText())));
+            });
         });
 
         btnStop.addActionListener(e -> {
-
+            this.controller.processEvent(() -> {
+                controller.stopExecution();
+            });
+            btnStart.setEnabled(true);
+            btnStop.setEnabled(false);
         });
 
         mainPanel.add(inputPanel);
@@ -98,11 +109,9 @@ public class GuiView implements View{
 
         final JPanel showPanel = new JPanel();
 
-        showPanel.add(distribution);
-        distribution.setAutoscrolls(true);
+        showPanel.add(new JScrollPane(distribution));
 
-        showPanel.add(ranking);
-        ranking.setAutoscrolls(true);
+        showPanel.add(new JScrollPane(ranking));
 
         mainPanel.add(showPanel);
 
@@ -116,13 +125,17 @@ public class GuiView implements View{
         distributionModel.addAll(this.controller.getResults().getDistribution().entrySet().stream()
                 .map(e -> "files of " + e.getKey() + " lines: " + e.getValue())
                 .collect(Collectors.toList()));
-        distribution.setModel(distributionModel);
+        SwingUtilities.invokeLater(() -> {
+            distribution.setModel(distributionModel);
+        });
 
         DefaultListModel<Result> rankingModel = new DefaultListModel<>();
         final List<Result> rankingList = this.controller.getResults().getRanking();
-        System.out.println(rankingList);
         rankingModel.addAll(rankingList);
-        ranking.setModel(rankingModel);
+
+        SwingUtilities.invokeLater(() -> {
+            ranking.setModel(rankingModel);
+        });
     }
 
     @Override

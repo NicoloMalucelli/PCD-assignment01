@@ -1,5 +1,6 @@
 package assignment1.model;
 
+import assignment1.utils.Flag;
 import assignment1.utils.SetUpInfo;
 import assignment1.utils.Results;
 
@@ -13,4 +14,6 @@ public interface Model {
     void addObserver(ModelObserver observer);
 
     void notifyObservers(ModelObserver.Event event);
+
+    Flag getStopExecutionFlag();
 }

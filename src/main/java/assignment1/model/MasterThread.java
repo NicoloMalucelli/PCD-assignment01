@@ -1,6 +1,7 @@
 package assignment1.model;
 
 import assignment1.controller.Controller;
+import assignment1.utils.Flag;
 import assignment1.utils.SynchronizedQueue;
 import assignment1.utils.SynchronizedQueueImpl;
 
@@ -24,9 +25,15 @@ public class MasterThread extends Thread{
 
     @Override
     public void run() {
+        Thread.currentThread().setName("MasterThread");
         this.searchFiles();
-        IntStream.range(0, nWorkers).forEach(i -> new WorkerThread(files, results).start());
-        for (int i = 0, numOfFiles = this.files.size(); i < numOfFiles; i++) {
+        final Flag stopExecutionFlag = this.controller.getStopExecutionFlag();
+        IntStream.range(0, nWorkers).forEach(i -> {
+            Thread worker = new WorkerThread(files, results, stopExecutionFlag);
+            worker.setName("Worker[" + i + "]");
+            worker.start();
+        });
+        for (int i = 0, numOfFiles = this.files.size(); i < numOfFiles && !stopExecutionFlag.get(); i++) {
             try {
                 final Result result = results.blockingRemove();
                 this.controller.getResults().add(result);

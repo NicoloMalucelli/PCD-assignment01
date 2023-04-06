@@ -12,7 +12,6 @@ import assignment1.view.View;
 public class Assignment1GUI {
 
     public static void main(String[] args){
-        final SetUpInfo setUpInfo = new SetUpInfo("C:\\Users\\nicol\\Documents\\Progetti\\scarabeo", 50, 2, 100);
         final Model model = new ModelImpl();
         final View view = new GuiView();
         final Controller controller = new ControllerImpl(model, view);

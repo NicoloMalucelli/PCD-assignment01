@@ -9,6 +9,7 @@ public class ModelImpl implements Model{
     private Results results;
     private final List<ModelObserver> observers = new LinkedList<>();
     private SetUpInfo setUpInfo;
+    private Flag stopExecutionFlag = new Flag();
 
     @Override
     public void init(SetUpInfo setUpInfo){
@@ -37,5 +38,8 @@ public class ModelImpl implements Model{
             }
         }
     }
-
+    @Override
+    public Flag getStopExecutionFlag(){
+        return this.stopExecutionFlag;
+    }
 }
