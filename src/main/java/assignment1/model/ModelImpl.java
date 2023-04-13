@@ -11,6 +11,8 @@ public class ModelImpl implements Model{
     private SetUpInfo setUpInfo;
     private Flag stopExecutionFlag = new Flag();
 
+    private long startTime;
+
     @Override
     public void init(SetUpInfo setUpInfo){
         this.setUpInfo = setUpInfo;
@@ -41,5 +43,15 @@ public class ModelImpl implements Model{
     @Override
     public Flag getStopExecutionFlag(){
         return this.stopExecutionFlag;
+    }
+
+    @Override
+    public long getStartTime() {
+        return this.startTime;
+    }
+
+    @Override
+    public void setStartTime(long time) {
+        this.startTime = time;
     }
 }

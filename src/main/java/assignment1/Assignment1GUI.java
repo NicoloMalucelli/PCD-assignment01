@@ -17,7 +17,6 @@ public class Assignment1GUI {
         final Controller controller = new ControllerImpl(model, view);
 
         model.addObserver(view);
-        //controller.start(2);
     }
 
 }

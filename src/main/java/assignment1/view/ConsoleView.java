@@ -26,6 +26,7 @@ public class ConsoleView implements View{
         for (Map.Entry<Interval, Integer> e : this.controller.getResults().getDistribution().entrySet()) {
             System.out.println("files of " + e.getKey() + " lines: " + e.getValue());
         }
+        System.out.println("\nexecution time: " + controller.getElapsedTime() + " milliseconds");
     }
 
 

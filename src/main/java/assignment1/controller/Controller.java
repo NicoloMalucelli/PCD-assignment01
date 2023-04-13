@@ -11,8 +11,8 @@ public interface Controller {
     void notifyObservers(ModelObserver.Event event);
     SetUpInfo getSetUpInfo();
     void stopExecution();
-
     Flag getStopExecutionFlag();
-
     void processEvent(Runnable runnable);
+
+    long getElapsedTime();
 }

@@ -14,6 +14,7 @@ public interface Model {
     void addObserver(ModelObserver observer);
 
     void notifyObservers(ModelObserver.Event event);
-
     Flag getStopExecutionFlag();
+    long getStartTime();
+    void setStartTime(long time);
 }
